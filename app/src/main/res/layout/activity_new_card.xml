@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:id="@+id/card_que"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:hint="Question"/>
+    <EditText
+        android:id="@+id/card_ans"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/card_que"
+        android:paddingTop="25dp"
+        android:hint="Answer"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        />
+
+    <Button
+        android:id="@+id/card_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="82dp"
+        android:background="@drawable/button_shape"
+        android:drawablePadding="5dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:text="Add Card"
+        android:textColor="#fff" />
+
+
+</RelativeLayout>
