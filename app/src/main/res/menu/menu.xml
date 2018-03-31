@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <item android:title="Licence"
     android:id="@+id/menu_li"/>
     <item android:title="About"
         android:id="@+id/menu_ab"/>
+    <item android:title="notifications"
+        android:id="@+id/notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        app:showAsAction="ifRoom"/>
 </menu>

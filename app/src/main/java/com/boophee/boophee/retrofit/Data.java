@@ -26,11 +26,21 @@ public class Data  {
     @Expose
     private String updatedAt;
 
-
-
     @SerializedName("difficulty")
     @Expose
-    private String difficulty;
+    private int difficulty;
+
+    @SerializedName("tags")
+    @Expose
+    private String tags;
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 
     public Integer getId() {
         return id;
@@ -96,11 +106,12 @@ public class Data  {
         this.updatedAt = updatedAt;
         return this;
     }
-    public String getDifficulty() {
+
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 }

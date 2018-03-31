@@ -37,9 +37,11 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
         RelativeLayout cardsLayout;
         RelativeLayout card_backgroung;
         TextView textView_que;
+        ImageView imageView_difficulty;
         ImageView imageView_share;
         ImageView imageView_heart;
         TextView textView_ans;
+        TextView textView_tags;
         int heart_state=0;
 
 
@@ -50,6 +52,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
             imageView_heart = v.findViewById(R.id.like_heart);
             card_backgroung = v.findViewById(R.id.card_image);
             imageView_share = v.findViewById(R.id.share_card);
+            imageView_difficulty = v.findViewById(R.id.difficulty);
+            textView_tags = v.findViewById(R.id.tags);
         }
 
     }
@@ -71,6 +75,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     @Override
     public void onBindViewHolder(final CardsAdapter.CardViewHolder holder, int position) {
         holder.textView_que.setText(cards.get(position).getQue());
+        holder.textView_tags.setText(cards.get(position).getTags());
         holder.imageView_heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +92,30 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
             holder.card_backgroung.setBackgroundColor(Color.parseColor("#00ACC1"));
         }
 
+        if (cards.get(position).getDifficulty() == 1)
+        {
+                holder.imageView_difficulty.setImageResource(R.drawable.stress_1);
+        }
+        if (cards.get(position).getDifficulty() == 2)
+        {
+            holder.imageView_difficulty.setImageResource(R.drawable.stress_2);
+        }
+        if (cards.get(position).getDifficulty() == 3)
+        {
+            holder.imageView_difficulty.setImageResource(R.drawable.stress_3);
+        }
+        if (cards.get(position).getDifficulty() == 4)
+        {
+            holder.imageView_difficulty.setImageResource(R.drawable.stress_4);
+        }
+        if (cards.get(position).getDifficulty() == 5)
+        {
+            holder.imageView_difficulty.setImageResource(R.drawable.stress_5);
+        }
+        if (cards.get(position).getDifficulty() >= 6)
+        {
+            holder.imageView_difficulty.setImageResource(R.drawable.stress_6);
+        }
         holder.imageView_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

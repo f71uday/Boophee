@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +46,7 @@ public class CardSwipeActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.swipe_card);
+
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         flingContainer1 = findViewById(R.id.card_stack_view1);
         flingContainer1.setLayoutManager(new LinearLayoutManager(this ));
@@ -94,6 +96,10 @@ public class CardSwipeActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.menu_li)
         {
             startActivity(new Intent(CardSwipeActivity.this,Licence.class));
+        }
+        if (item.getItemId() ==R.id.notifications)
+        {
+            startActivity(new Intent(CardSwipeActivity.this,Notifications.class));
         }
         return true;
     }
