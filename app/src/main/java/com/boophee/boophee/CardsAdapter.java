@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,14 +34,19 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     Context context;
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout cardsLayout;
+        RelativeLayout card_backgroung;
         TextView textView_que;
+        ImageView imageView_heart;
         TextView textView_ans;
+        int heart_state=0;
 
 
         public CardViewHolder(View v) {
             super(v);
             cardsLayout = (RelativeLayout) v.findViewById(R.id.Relative_card);
             textView_que = v.findViewById(R.id.helloText_1);
+            imageView_heart = v.findViewById(R.id.like_heart);
+            card_backgroung = v.findViewById(R.id.card_image);
         }
 
     }
@@ -60,8 +66,24 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     }
 
     @Override
-    public void onBindViewHolder(CardsAdapter.CardViewHolder holder, int position) {
+    public void onBindViewHolder(final CardsAdapter.CardViewHolder holder, int position) {
         holder.textView_que.setText(cards.get(position).getQue());
+        holder.imageView_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                holder.imageView_heart.setImageResource(R.drawable.heart_red);
+            }
+        });
+        if (position%2==0)
+        {
+            holder.card_backgroung.setBackgroundColor(Color.parseColor("#F9A825"));
+        }
+        if (position%3==0)
+        {
+            holder.card_backgroung.setBackgroundColor(Color.parseColor("#00ACC1"));
+        }
+
     }
 
     @Override

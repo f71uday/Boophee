@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CardSwipeActivity"
+            android:name=".introSlider"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".NewCard"></activity>
         <activity android:name=".Licence"></activity>
+        <activity android:name=".CardSwipeActivity"></activity>
     </application>
 
 </manifest>

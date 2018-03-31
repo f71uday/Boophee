@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CardSwipeActivity"
+    android:background="#000"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -26,6 +27,6 @@
             android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
         android:src="@drawable/plus"
-        android:backgroundTint="#00A651"
+        android:backgroundTint="@color/colorPrimaryDark"
          />
 </RelativeLayout>
