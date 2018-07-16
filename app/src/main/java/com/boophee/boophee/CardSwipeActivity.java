@@ -1,6 +1,9 @@
 package com.boophee.boophee;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,11 +19,16 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.RelativeLayout;
 
+import com.anupcowkur.reservoir.Reservoir;
+import com.anupcowkur.reservoir.ReservoirPutCallback;
 import com.boophee.boophee.retrofit.Data;
 import com.boophee.boophee.retrofit.DataResponse;
 import com.boophee.boophee.retrofit.api.ApiClient;
 import com.boophee.boophee.retrofit.api.ApiInterface;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +45,7 @@ public class CardSwipeActivity extends AppCompatActivity {
 
     private ArrayList<Data> al;
     private CardsAdapter arrayAdapter;
-
+    String cache_key = "User_data";
 
     FloatingActionButton floatingActionButton;
     RecyclerView flingContainer1,flingContainer2;
@@ -59,9 +67,20 @@ public class CardSwipeActivity extends AppCompatActivity {
                 Toasty.success(getApplicationContext(),"All Cards Updated").show();
             }
         });
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
 
+            fetchCards();
+
+        }
+        else
+        {
+            getChachedData();
+        }
+    /*
         //API call
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+       ApiInterface apiInterface = ApiClient.getClient(getApplicationContext()).create(ApiInterface.class);
         Call<DataResponse> call = apiInterface.getAllCards();
         call.enqueue(new Callback<DataResponse>() {
 
@@ -80,7 +99,7 @@ public class CardSwipeActivity extends AppCompatActivity {
 
             }
         });
-
+*/
         floatingActionButton = findViewById(R.id.new_card);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,16 +134,16 @@ public class CardSwipeActivity extends AppCompatActivity {
 
     public void fetchCards()
     {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiInterface = ApiClient.getClient(getApplicationContext()).create(ApiInterface.class);
         Call<DataResponse> call = apiInterface.getAllCards();
         call.enqueue(new Callback<DataResponse>() {
 
             @Override
             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
-                List<Data> data = response.body().getData();
-
+                 List<Data> data = response.body().getData();
                 flingContainer1.setAdapter( new CardsAdapter(data,R.layout.page_item,getApplicationContext()));
                 Log.e("api",data.size()+"");
+                DataCaching(data);
 
             }
 
@@ -133,5 +152,42 @@ public class CardSwipeActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void DataCaching( Object object)
+    {
+        try {
+            Reservoir.init(this, 2048); //in bytes
+        } catch (IOException e) {
+            //failure
+        }
+        Reservoir.putAsync("User_data", object, new ReservoirPutCallback() {
+            @Override
+            public void onSuccess() {
+                Log.d("Data_chaching","Data Chached Sucessfull");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("Data_chacing","data chacheing failed");
+            }
+        });
+    }
+
+    public void getChachedData()
+    {
+        try {
+            Reservoir.init(this, 2048); //in bytes
+        } catch (IOException e) {
+            //failure
+        }
+        Type dataType = new TypeToken<List<Data>> () {}.getType();
+        try {
+            List<Data> data = Reservoir.get(cache_key,dataType);
+            Log.e("1st", String.valueOf(data.get(1)));
+            flingContainer1.setAdapter( new CardsAdapter(data,R.layout.page_item,getApplicationContext()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
